@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waterkrachtturbines — Typen in detail</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --water:       #0EA5E9;
+    --water-dark:  #0C4A6E;
+    --water-light: #E0F2FE;
+    --water-mid:   #38BDF8;
+    --accent:      #0369A1;
+    --success:     #059669;
+    --success-bg:  #D1FAE5;
+    --warning:     #B45309;
+    --warning-bg:  #FEF3C7;
+    --danger:      #DC2626;
+    --danger-bg:   #FEE2E2;
+    --pro:         #7C3AED;
+    --pro-bg:      #EDE9FE;
+    --bg:          #F0F9FF;
+    --surface:     #FFFFFF;
+    --surface2:    #F8FAFC;
+    --tekst:       #0F172A;
+    --tekst-2:     #475569;
+    --tekst-3:     #94A3B8;
+    --rand:        #E2E8F0;
+    --rand-sterk:  #CBD5E1;
+    --radius:      10px;
+    --schaduw:     0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--tekst);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(150deg, var(--water-dark) 0%, #0369A1 60%, #0891B2 100%);
+    color: white;
+    padding: 2rem 1.5rem 1.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--water-mid), #06B6D4, var(--water-mid));
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.6rem;
+  }
+  .header h1 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 300;
+    letter-spacing: -0.3px;
+    margin-bottom: 0.3rem;
+  }
+  .header h1 strong { font-weight: 600; }
+  .header p {
+    font-size: 13px;
+    opacity: 0.65;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  /* ── KAARTEN RIJ ── */
+  .kaarten {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .kaart {
+    background: var(--surface);
+    border: 1.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 0.85rem 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+    text-align: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .kaart:hover {
+    border-color: var(--water);
+    box-shadow: var(--schaduw);
+    transform: translateY(-1px);
+  }
+  .kaart.actief {
+    border-color: var(--accent);
+    background: var(--water-light);
+    box-shadow: 0 0 0 3px rgba(3,105,161,0.12);
+  }
+  .kaart-icon { font-size: 24px; margin-bottom: 5px; display: block; }
+  .kaart-naam {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--tekst);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .kaart-jaar { font-size: 11px; color: var(--tekst-3); }
+  .kaart-badge {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.2px;
+  }
+  .imp  { background: var(--warning-bg); color: var(--warning); }
+  .react{ background: var(--pro-bg);     color: var(--pro); }
+  .pot  { background: var(--success-bg); color: var(--success); }
+
+  /* ── DETAIL PANEEL ── */
+  .detail {
+    background: var(--surface);
+    border: 1px solid var(--rand);
+    border-radius: 14px;
+    box-shadow: var(--schaduw);
+    overflow: hidden;
+    transition: opacity 0.2s;
+  }
+  .detail-kop {
+    background: linear-gradient(135deg, var(--water-dark), var(--accent));
+    color: white;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .detail-kop-icon { font-size: 2rem; flex-shrink: 0; }
+  .detail-kop-naam { font-size: 1.15rem; font-weight: 600; margin-bottom: 2px; }
+  .detail-kop-sub { font-size: 12px; opacity: 0.7; }
+  .detail-body { padding: 1.25rem 1.5rem; }
+
+  /* SPECS */
+  .specs-rij {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .spec {
+    background: var(--surface2);
+    border: 1px solid var(--rand);
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+  .spec-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--tekst-3);
+    margin-bottom: 3px;
+  }
+  .spec-val {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--tekst);
+    line-height: 1.4;
+  }
+
+  /* STAAFGRAFIEKEN */
+  .balken { margin-bottom: 1.25rem; }
+  .balk-sectietitel {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--tekst-3);
+    margin-bottom: 8px;
+  }
+  .balk-rij {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+  }
+  .balk-label {
+    font-size: 12px;
+    color: var(--tekst-2);
+    width: 110px;
+    flex-shrink: 0;
+  }
+  .balk-track {
+    flex: 1;
+    height: 7px;
+    background: var(--rand);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .balk-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--water-mid));
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .balk-num {
+    font-size: 11px;
+    color: var(--tekst-3);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* VOOR / NADELEN */
+  .proscongrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 480px) {
+    .proscongrid { grid-template-columns: 1fr; }
+    .specs-rij { grid-template-columns: 1fr 1fr; }
+  }
+  .pc-box {
+    background: var(--surface2);
+    border: 1px solid var(--rand);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .pc-titel {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 7px;
+  }
+  .pc-titel.pro { color: var(--success); }
+  .pc-titel.con { color: var(--danger); }
+  .pc-item {
+    font-size: 12.5px;
+    color: var(--tekst-2);
+    line-height: 1.5;
+    margin-bottom: 4px;
+    padding-left: 13px;
+    position: relative;
+  }
+  .pc-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--tekst-3);
+  }
+
+  /* TOEPASSINGEN */
+  .toepassing-box {
+    background: var(--water-light);
+    border: 1px solid #BAE6FD;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .toepassing-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .toepassing-tekst {
+    font-size: 13px;
+    color: var(--water-dark);
+    line-height: 1.6;
+  }
+
+  /* VERGELIJKING BADGE */
+  .best-badge {
+    display: inline-block;
+    background: var(--success-bg);
+    color: var(--success);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--tekst-3);
+    padding: 1rem;
+    border-top: 1px solid var(--rand);
+    margin-top: 1rem;
+  }
+
+  /* ANIMATIE bij selectie */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .detail-body { animation: fadeIn 0.2s ease; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-eyebrow">Groene Energie · Waterkracht</div>
+  <h1>Waterkrachtturbines — <strong>typen in detail</strong></h1>
+  <p>Selecteer een type om kenmerken, rendement, voor- en nadelen en toepassingen te bekijken.</p>
+</header>
+
+<main class="main">
+
+  <!-- KAARTEN -->
+  <div class="kaarten" id="kaarten"></div>
+
+  <!-- DETAIL -->
+  <div class="detail" id="detail">
+    <div class="detail-kop" id="detail-kop"></div>
+    <div class="detail-body" id="detail-body"></div>
+  </div>
+
+</main>
+
+<footer>
+  EducaThor Genk · Groene Energie · Waterkracht
+</footer>
+
+<script>
+const TYPES = [
+  {
+    id: 0,
+    icon: '⚙️',
+    naam: 'Horizontale wielmolen',
+    jaar: '~300 v.Chr.',
+    badge: 'Impulse', badgeKlasse: 'imp',
+    principe: 'Impulse — waterstraal van onderaf',
+    valhoogte: '1 – 3 m',
+    debiet: 'Laag',
+    rendement: '15 – 30 %',
+    regeling: 'Geen',
+    druk: 'Atmosferisch',
+    as: 'Verticale as → molensteen direct',
+    bars: [
+      { label: 'Rendement',      val: 22 },
+      { label: 'Regelbaarheid',  val:  5 },
+      { label: 'Debietgebied',   val: 15 },
+      { label: 'Valhoogtegebied',val: 15 },
+    ],
+    voor: [
+      'Geen tandwielen nodig',
+      'Eenvoudig te bouwen en onderhouden',
+      'Robuust, weinig bewegende delen',
+    ],
+    nadelen: [
+      'Laag rendement (15 – 30 %)',
+      'Molensteen draait te traag',
+      'Niet schaalbaar naar groter vermogen',
+    ],
+    toepassingen: 'Graanmalen in bergbeken (Perzië, Griekenland, vroeg-Romeins). Vandaag nog in gebruik in bergdorpen van Afghanistan en Nepal. Pedagogisch interessant als eenvoudigste hydraulische motor ooit.',
+  },
+  {
+    id: 1,
+    icon: '🌊',
+    naam: 'Onderslagmolen',
+    jaar: '~100 n.Chr.',
+    badge: 'Impulse', badgeKlasse: 'imp',
+    principe: 'Impulse — stroomsnelheid van water',
+    valhoogte: '< 1 m',
+    debiet: 'Middel – hoog',
+    rendement: '20 – 35 %',
+    regeling: 'Beperkt (stuw)',
+    druk: 'Atmosferisch',
+    as: 'Verticale as → tandwieloverbrenging',
+    bars: [
+      { label: 'Rendement',      val: 28 },
+      { label: 'Regelbaarheid',  val: 15 },
+      { label: 'Debietgebied',   val: 65 },
+      { label: 'Valhoogtegebied',val: 10 },
+    ],
+    voor: [
+      'Werkt op vlakke rivieren zonder kunstmatig verval',
+      'Hoog debiet benutbaar',
+      'Eenvoudige constructie',
+    ],
+    nadelen: [
+      'Laagste rendement van verticale raderen',
+      'Droogteperiodes = stilstand',
+      'Kwetsbaar bij hoogwater',
+    ],
+    toepassingen: 'Vlakke rivieren in de Kempen en het Maasland. Kleine Nete (Retie, Kasterlee), Dommel (Eindhoven), Aa (Tielen), Dinkel. Vandaag vrijwel uitsluitend als erfgoedmolen.',
+  },
+  {
+    id: 2,
+    icon: '🏔️',
+    naam: 'Bovenslagmolen',
+    jaar: 'Middeleeuwen',
+    badge: 'Potentieel + kinetisch', badgeKlasse: 'pot',
+    principe: 'Potentiële energie (gewicht) + kinetisch',
+    valhoogte: '3 – 10 m',
+    debiet: 'Laag – middel',
+    rendement: '50 – 70 %',
+    regeling: 'Gootschuif',
+    druk: 'Atmosferisch',
+    as: 'Verticale as → tandwieloverbrenging',
+    bars: [
+      { label: 'Rendement',      val: 60 },
+      { label: 'Regelbaarheid',  val: 30 },
+      { label: 'Debietgebied',   val: 35 },
+      { label: 'Valhoogtegebied',val: 30 },
+    ],
+    voor: [
+      'Hoogste rendement historisch (tot 70 %)',
+      'Molenvijver als energiebuffer',
+      'Benut zowel gewicht als stroomsnelheid',
+    ],
+    nadelen: [
+      'Minimum 3 m verval nodig',
+      'Goot, stuw en molenvijver als infrastructuur',
+      'Groot wiel = grote ruimtelijke voetafdruk',
+    ],
+    toepassingen: 'Heuvelige beken in Ardennen en heuvelland Limburg. Molen Herckenrode op de Demer, Ten Bergemolen (Gent, vermeld 1040). Vandaag als museum of kleinschalige elektriciteitsopwekking.',
+  },
+  {
+    id: 3,
+    icon: '🌀',
+    naam: 'Francis-turbine',
+    jaar: '1849 — James B. Francis',
+    badge: 'Reactie', badgeKlasse: 'react',
+    principe: 'Reactie: radiaal instroom → axiaal uitstroom',
+    valhoogte: '20 – 600 m',
+    debiet: 'Middel – hoog',
+    rendement: '90 – 93 %',
+    regeling: 'Gidsvanen (continu regelbaar)',
+    druk: 'Ingesloten (overdruk)',
+    as: 'Verticale of horizontale as',
+    bars: [
+      { label: 'Rendement',      val: 93 },
+      { label: 'Regelbaarheid',  val: 85 },
+      { label: 'Debietgebied',   val: 75 },
+      { label: 'Valhoogtegebied',val: 85 },
+    ],
+    voor: [
+      'Hoogste rendement van alle turbinetypen (tot 93 %)',
+      'Breed inzetbaar voor zowel H als Q',
+      'Compact voor zijn vermogen',
+      'Continu regelbaar via gidsvanen',
+    ],
+    nadelen: [
+      'Cavitatie-risico bij te diepe plaatsing',
+      'Minder efficiënt bij sterk wisselend debiet',
+      'Complexe en dure fabricage',
+    ],
+    toepassingen: 'Meest gebruikte turbine ter wereld. Drieklovendam China (22,5 GW), Grand Coulee VS, Itaipú Brazilië/Paraguay. Universeel van 20 MW tot meerdere GW.',
+  },
+  {
+    id: 4,
+    icon: '💧',
+    naam: 'Pelton-turbine',
+    jaar: '1878 — Lester Pelton',
+    badge: 'Impulse', badgeKlasse: 'imp',
+    principe: 'Puur impulse: vrije waterstraal op dubbele cups',
+    valhoogte: '300 – 1800 m',
+    debiet: 'Laag',
+    rendement: '88 – 92 %',
+    regeling: 'Nozels + afbuigklep',
+    druk: 'Atmosferisch (vrije straal)',
+    as: 'Horizontale as (1–2 stralen) of verticale as',
+    bars: [
+      { label: 'Rendement',      val: 91 },
+      { label: 'Regelbaarheid',  val: 80 },
+      { label: 'Debietgebied',   val: 15 },
+      { label: 'Valhoogtegebied',val: 100 },
+    ],
+    voor: [
+      'Ideaal voor extreme valhoogtes (tot 1800 m)',
+      'Geen drukbehuizing nodig (vrije straal)',
+      'Schoepenrand eenvoudig te vervangen',
+      'Goed partieel rendement bij deellast',
+    ],
+    nadelen: [
+      'Alleen geschikt voor laag debiet',
+      'Drukleidingen (penstock) soms kilometersver',
+      'Niet bruikbaar bij lage valhoogte',
+    ],
+    toepassingen: 'Noorwegen (Sy-Sima, 1220 m), Zwitserland (Grande Dixence, 1748 m), Coo-Trois-Ponts België (270 m). Micro-Pelton voor berghutten en off-grid toepassingen.',
+  },
+  {
+    id: 5,
+    icon: '🔄',
+    naam: 'Kaplan-turbine',
+    jaar: '1913 — Viktor Kaplan',
+    badge: 'Reactie', badgeKlasse: 'react',
+    principe: 'Reactie: axiaal doorstroomd, verstelbare bladen',
+    valhoogte: '2 – 40 m',
+    debiet: 'Zeer hoog',
+    rendement: '90 – 93 %',
+    regeling: 'Gidsvanen + rotorbladverstelling (dubbel)',
+    druk: 'Ingesloten (overdruk)',
+    as: 'Verticale of horizontale Bulb-variant',
+    bars: [
+      { label: 'Rendement',      val: 93 },
+      { label: 'Regelbaarheid',  val: 95 },
+      { label: 'Debietgebied',   val: 100 },
+      { label: 'Valhoogtegebied',val: 30 },
+    ],
+    voor: [
+      'Beste keuze bij hoog debiet en laag verval',
+      'Rendement stabiel over breed debietsgebied',
+      'Verstelbare rotorbladen = maximale flexibiliteit',
+      'Geschikt voor getijdenstations',
+    ],
+    nadelen: [
+      'Complexe mechaniek (dubbele verstelling)',
+      'Hoge constructie- en onderhoudskosten',
+      'Groot grond- en betonwerk nodig',
+    ],
+    toepassingen: 'Riviermond Eems, Maasbracht, Gentbrugge. Getijdecentrale Rance (Frankrijk, 240 MW). Coo-Trois-Ponts (pomp-opslagcentrale). Stroom-Kaplan in bevaarbare waterwegen.',
+  },
+];
+
+let huidig = 0;
+
+function bouwKaarten() {
+  const grid = document.getElementById('kaarten');
+  grid.innerHTML = TYPES.map(t => `
+    <div class="kaart${t.id === 0 ? ' actief' : ''}" onclick="kiesType(${t.id})" role="button" tabindex="0" aria-label="${t.naam} selecteren">
+      <span class="kaart-icon">${t.icon}</span>
+      <div class="kaart-naam">${t.naam}</div>
+      <div class="kaart-jaar">${t.jaar}</div>
+      <span class="kaart-badge ${t.badgeKlasse}">${t.badge}</span>
+    </div>`).join('');
+}
+
+function bouwDetail(id) {
+  const t = TYPES[id];
+
+  // Bepaal welke bars de hoogste waarde hebben voor een badge
+  const maxBars = {};
+  ['rendement','regelbaarheid','debietgebied','valhoogtegebied'].forEach((k, i) => {
+    const max = Math.max(...TYPES.map(ty => ty.bars[i].val));
+    if (t.bars[i].val === max) maxBars[i] = true;
+  });
+
+  document.getElementById('detail-kop').innerHTML = `
+    <div class="detail-kop-icon">${t.icon}</div>
+    <div>
+      <div class="detail-kop-naam">${t.naam}</div>
+      <div class="detail-kop-sub">${t.jaar}</div>
+    </div>`;
+
+  const specsHTML = [
+    { label: 'Werkingsprincipe', val: t.principe },
+    { label: 'Valhoogte',        val: t.valhoogte },
+    { label: 'Debiet',           val: t.debiet },
+    { label: 'Max. rendement',   val: t.rendement },
+    { label: 'Regeling',         val: t.regeling },
+    { label: 'Waterdruk in turbine', val: t.druk },
+    { label: 'As-oriëntatie',    val: t.as },
+  ].map(s => `
+    <div class="spec">
+      <div class="spec-label">${s.label}</div>
+      <div class="spec-val">${s.val}</div>
+    </div>`).join('');
+
+  const balkenHTML = t.bars.map((b, i) => `
+    <div class="balk-rij">
+      <span class="balk-label">${b.label}${maxBars[i] ? '<span class="best-badge">best</span>' : ''}</span>
+      <div class="balk-track"><div class="balk-fill" style="width:${b.val}%"></div></div>
+      <span class="balk-num">${b.val} %</span>
+    </div>`).join('');
+
+  const voorHTML  = t.voor.map(v    => `<div class="pc-item">${v}</div>`).join('');
+  const nadelenHTML = t.nadelen.map(n => `<div class="pc-item">${n}</div>`).join('');
+
+  // Vervang de body met animatie
+  const body = document.getElementById('detail-body');
+  body.style.animation = 'none';
+  body.offsetHeight; // reflow
+  body.style.animation = '';
+
+  body.innerHTML = `
+    <div class="specs-rij">${specsHTML}</div>
+
+    <div class="balken">
+      <div class="balk-sectietitel">Vergelijkende prestatie-indicatoren</div>
+      ${balkenHTML}
+    </div>
+
+    <div class="proscongrid">
+      <div class="pc-box">
+        <div class="pc-titel pro">Voordelen</div>
+        ${voorHTML}
+      </div>
+      <div class="pc-box">
+        <div class="pc-titel con">Nadelen</div>
+        ${nadelenHTML}
+      </div>
+    </div>
+
+    <div class="toepassing-box">
+      <div class="toepassing-label">Typische toepassingen</div>
+      <div class="toepassing-tekst">${t.toepassingen}</div>
+    </div>`;
+}
+
+function kiesType(id) {
+  huidig = id;
+  document.querySelectorAll('.kaart').forEach((k, i) => {
+    k.classList.toggle('actief', i === id);
+  });
+  bouwDetail(id);
+}
+
+// Toetsenbordondersteuning
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') kiesType((huidig + 1) % TYPES.length);
+  if (e.key === 'ArrowLeft')  kiesType((huidig - 1 + TYPES.length) % TYPES.length);
+});
+
+// Init
+bouwKaarten();
+bouwDetail(0);
+</script>
+</body>
+</html>
