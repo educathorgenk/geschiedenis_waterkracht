@@ -161,12 +161,78 @@
   .detail-kop-sub { font-size: 12px; opacity: 0.7; }
   .detail-body { padding: 1.25rem 1.5rem; }
 
+  /* AFBEELDING */
+  .detail-afbeelding {
+    width: 100%;
+    height: 220px;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rand);
+  }
+  .detail-afbeelding img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .detail-afbeelding.leeg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .detail-afbeelding-icon {
+    font-size: 2.5rem;
+    opacity: 0.25;
+  }
+  .detail-afbeelding-tekst {
+    font-size: 11px;
+    color: var(--tekst-3);
+    text-align: center;
+    max-width: 260px;
+    line-height: 1.6;
+  }
+  .detail-afbeelding-tekst code {
+    font-size: 10px;
+    background: var(--rand);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--tekst-2);
+  }
+  .detail-afbeelding-bron {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 10px;
+    color: white;
+    background: rgba(0,0,0,0.45);
+    padding: 2px 8px;
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+  }
+
+  /* MINI-THUMBNAIL OP DE KAARTEN */
+  .kaart-thumb {
+    width: 100%;
+    height: 56px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-bottom: 6px;
+    display: block;
+    background: var(--surface2);
+  }
+
   /* SPECS */
   .specs-rij {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     margin-bottom: 1.25rem;
+  }
+  @media (max-width: 560px) {
+    .specs-rij { grid-template-columns: repeat(2, 1fr); }
   }
   .spec {
     background: var(--surface2);
@@ -241,7 +307,6 @@
   }
   @media (max-width: 480px) {
     .proscongrid { grid-template-columns: 1fr; }
-    .specs-rij { grid-template-columns: 1fr 1fr; }
   }
   .pc-box {
     background: var(--surface2);
@@ -294,6 +359,39 @@
     line-height: 1.6;
   }
 
+  /* WERKINGSPRINCIPE */
+  .werking-box {
+    background: var(--surface2);
+    border: 1px solid var(--rand);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 1.25rem;
+  }
+  .werking-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .werking-item {
+    font-size: 13.5px;
+    color: var(--tekst-2);
+    line-height: 1.6;
+    margin-bottom: 4px;
+    padding-left: 14px;
+    position: relative;
+  }
+  .werking-item:last-child { margin-bottom: 0; }
+  .werking-item::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
   /* VERGELIJKING BADGE */
   .best-badge {
     display: inline-block;
@@ -340,6 +438,7 @@
 
   <!-- DETAIL -->
   <div class="detail" id="detail">
+    <div id="detail-afbeelding"></div>
     <div class="detail-kop" id="detail-kop"></div>
     <div class="detail-body" id="detail-body"></div>
   </div>
@@ -359,6 +458,15 @@ const TYPES = [
     jaar: '~300 v.Chr.',
     badge: 'Impulse', badgeKlasse: 'imp',
     principe: 'Impulse — waterstraal van onderaf',
+    afbeelding: 'images/horizontale-wielmolen.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Een horizontaal waterrad met houten schoepen werd rechtstreeks aangedreven door een waterstraal van onderaf.',
+      'Geen tandwielen nodig — de as van het rad dreef de molensteen direct aan.',
+      'Eenvoudig maar laag rendement.',
+      'Geschikt voor snelle bergbeken met beperkt debiet.',
+      'Toerental van de steen = toerental van het rad, waardoor de steen vaak te traag draaide voor efficiënt malen.',
+    ],
     valhoogte: '1 – 3 m',
     debiet: 'Laag',
     rendement: '15 – 30 %',
@@ -390,6 +498,15 @@ const TYPES = [
     jaar: '~100 n.Chr.',
     badge: 'Impulse', badgeKlasse: 'imp',
     principe: 'Impulse — stroomsnelheid van water',
+    afbeelding: 'images/onderslagmolen.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Het water stroomt onderdoor het wiel en duwt de schoepen weg via de stroomsnelheid (kinetische energie).',
+      'Verticale as — een tandwieloverbrenging is nodig om de horizontale molensteen aan te drijven.',
+      'Het oudste type verticaal waterrad.',
+      'Ideaal voor rivieren met weinig hoogteverschil maar een hoog debiet, zoals in de Kempen en het Maasland.',
+      'Al bij een klein verval van 0,5 – 1 m kan dit type functioneren.',
+    ],
     valhoogte: '< 1 m',
     debiet: 'Middel – hoog',
     rendement: '20 – 35 %',
@@ -421,6 +538,15 @@ const TYPES = [
     jaar: 'Middeleeuwen',
     badge: 'Potentieel + kinetisch', badgeKlasse: 'pot',
     principe: 'Potentiële energie (gewicht) + kinetisch',
+    afbeelding: 'images/bovenslagmolen.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Het water wordt via een goot bovenaan het wiel in emmers of scheppen geleid.',
+      'Twee energiebronnen tegelijk: het gewicht van het water (potentiële energie) én de resterende stroomsnelheid.',
+      'Aanzienlijk efficiënter dan de onderslag- en middenslagmolen.',
+      'Een molenvijver kon water bufferen voor periodes zonder regen.',
+      'Het meest verspreide molentype in heuvelachtig Europa.',
+    ],
     valhoogte: '3 – 10 m',
     debiet: 'Laag – middel',
     rendement: '50 – 70 %',
@@ -452,6 +578,14 @@ const TYPES = [
     jaar: '1849 — James B. Francis',
     badge: 'Reactie', badgeKlasse: 'react',
     principe: 'Reactie: radiaal instroom → axiaal uitstroom',
+    afbeelding: 'images/francis-turbine.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Water stroomt radiaal naar binnen via verstelbare gidsvanen en verlaat de turbine axiaal.',
+      'Combineert twee mechanismen: de gidsvanen zetten drukenergie om in snelheid (impuls), de schoepen halen daarna ook de resterende druk eruit (reactie).',
+      'Continu regelbaar via de gidsvanen, ook bij deellast.',
+      'Vandaag wereldwijd de meest gebruikte turbine, van kleine centrales tot meerdere gigawatt.',
+    ],
     valhoogte: '20 – 600 m',
     debiet: 'Middel – hoog',
     rendement: '90 – 93 %',
@@ -484,6 +618,15 @@ const TYPES = [
     jaar: '1878 — Lester Pelton',
     badge: 'Impulse', badgeKlasse: 'imp',
     principe: 'Puur impulse: vrije waterstraal op dubbele cups',
+    afbeelding: 'images/pelton-turbine.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Eén of meerdere waterstralen treffen dubbele lepelvormige schoepen (cups) aan de buitenrand van het wiel.',
+      'Pure impulsturbine: in het huis heerst enkel atmosferische druk, geen overdruk.',
+      'Bij optimale werking verlaat het water de cups nagenoeg stilstaand — vrijwel alle energie is overgedragen.',
+      'Geschikt voor zeer hoge valhoogtes met een beperkt debiet.',
+      'Regeling via de nozel(s) en een afbuigklep, waardoor snelle lastwisselingen mogelijk zijn.',
+    ],
     valhoogte: '300 – 1800 m',
     debiet: 'Laag',
     rendement: '88 – 92 %',
@@ -516,6 +659,14 @@ const TYPES = [
     jaar: '1913 — Viktor Kaplan',
     badge: 'Reactie', badgeKlasse: 'react',
     principe: 'Reactie: axiaal doorstroomd, verstelbare bladen',
+    afbeelding: 'images/kaplan-turbine.jpg',
+    afbeeldingBron: '',
+    werking: [
+      'Axiaal doorstroomd propellertype — het water stroomt evenwijdig aan de as, zoals een omgekeerde scheepsschroef.',
+      'Cruciale innovatie: verstelbare rotorbladen, in tegenstelling tot een vaste propellerturbine.',
+      'Het rendement blijft hoog over een breed debietsgebied dankzij de dubbele verstelling (gidsvanen én rotorbladen).',
+      'Ideaal voor een laag verval gecombineerd met een hoog debiet.',
+    ],
     valhoogte: '2 – 40 m',
     debiet: 'Zeer hoog',
     rendement: '90 – 93 %',
@@ -549,11 +700,34 @@ function bouwKaarten() {
   const grid = document.getElementById('kaarten');
   grid.innerHTML = TYPES.map(t => `
     <div class="kaart${t.id === 0 ? ' actief' : ''}" onclick="kiesType(${t.id})" role="button" tabindex="0" aria-label="${t.naam} selecteren">
-      <span class="kaart-icon">${t.icon}</span>
+      <img class="kaart-thumb" src="${t.afbeelding}" alt="" loading="lazy"
+           data-icon="${t.icon}" onerror="toonThumbFallback(this)">
       <div class="kaart-naam">${t.naam}</div>
       <div class="kaart-jaar">${t.jaar}</div>
       <span class="kaart-badge ${t.badgeKlasse}">${t.badge}</span>
     </div>`).join('');
+}
+
+// Vervangt een gebroken kaart-thumbnail door het emoji-icoon, zodat er nooit
+// een 'gebroken beeld'-icoon zichtbaar is zolang de echte foto nog ontbreekt.
+function toonThumbFallback(img) {
+  const span = document.createElement('span');
+  span.className = 'kaart-icon';
+  span.textContent = img.dataset.icon;
+  img.replaceWith(span);
+}
+
+// Vervangt de grote detailbanner door een nette lege placeholder als de
+// afbeelding (nog) niet gevonden wordt op het opgegeven pad.
+function toonAfbeeldingFallback(img) {
+  const container = img.closest('.detail-afbeelding');
+  if (!container) return;
+  const icon = container.dataset.icon || '';
+  const pad = container.dataset.pad || '';
+  container.classList.add('leeg');
+  container.innerHTML = `
+    <span class="detail-afbeelding-icon">${icon}</span>
+    <span class="detail-afbeelding-tekst">Nog geen afbeelding gevonden op<br><code>${pad}</code></span>`;
 }
 
 function bouwDetail(id) {
@@ -566,6 +740,18 @@ function bouwDetail(id) {
     if (t.bars[i].val === max) maxBars[i] = true;
   });
 
+  // Afbeeldingsbanner met fallback: als de afbeelding niet laadt, tonen we
+  // een lege placeholder in plaats van een gebroken beeldicoon.
+  const bronHTML = t.afbeeldingBron
+    ? `<span class="detail-afbeelding-bron">${t.afbeeldingBron}</span>` : '';
+  document.getElementById('detail-afbeelding').innerHTML = `
+    <div class="detail-afbeelding" id="detail-afbeelding-inner">
+      <img src="${t.afbeelding}" alt="${t.naam}" onerror="toonAfbeeldingFallback(this)">
+      ${bronHTML}
+    </div>`;
+  document.getElementById('detail-afbeelding-inner').dataset.icon = t.icon;
+  document.getElementById('detail-afbeelding-inner').dataset.pad = t.afbeelding;
+
   document.getElementById('detail-kop').innerHTML = `
     <div class="detail-kop-icon">${t.icon}</div>
     <div>
@@ -573,14 +759,13 @@ function bouwDetail(id) {
       <div class="detail-kop-sub">${t.jaar}</div>
     </div>`;
 
+  const werkingHTML = t.werking.map(w => `<div class="werking-item">${w}</div>`).join('');
+
   const specsHTML = [
-    { label: 'Werkingsprincipe', val: t.principe },
-    { label: 'Valhoogte',        val: t.valhoogte },
-    { label: 'Debiet',           val: t.debiet },
-    { label: 'Max. rendement',   val: t.rendement },
-    { label: 'Regeling',         val: t.regeling },
-    { label: 'Waterdruk in turbine', val: t.druk },
-    { label: 'As-oriëntatie',    val: t.as },
+    { label: 'Valhoogte', val: t.valhoogte },
+    { label: 'Debiet',    val: t.debiet },
+    { label: 'Rendement', val: t.rendement },
+    { label: 'Regeling',  val: t.regeling },
   ].map(s => `
     <div class="spec">
       <div class="spec-label">${s.label}</div>
@@ -604,6 +789,11 @@ function bouwDetail(id) {
   body.style.animation = '';
 
   body.innerHTML = `
+    <div class="werking-box">
+      <div class="werking-label">Werkingsprincipe</div>
+      ${werkingHTML}
+    </div>
+
     <div class="specs-rij">${specsHTML}</div>
 
     <div class="balken">
