@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Waterkrachtturbines — Typen in detail</title>
+<title>Waterkrachtturbines - verschillende types in detail</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -386,7 +386,7 @@
   }
   .werking-item:last-child { margin-bottom: 0; }
   .werking-item::before {
-    content: '—';
+    content: '→';
     position: absolute;
     left: 0;
     color: var(--accent);
@@ -427,8 +427,8 @@
 
 <header class="header">
   <div class="header-eyebrow">Groene Energie · Waterkracht</div>
-  <h1>Waterkrachtturbines — <strong>typen in detail</strong></h1>
-  <p>Selecteer een type om kenmerken, rendement, voor- en nadelen en toepassingen te bekijken.</p>
+  <h1>Waterkrachtturbines - <strong>typen in detail</strong></h1>
+  <p>Selecteer een type om kenmerken, voor- en nadelen en toepassingen te bekijken.</p>
 </header>
 
 <main class="main">
@@ -456,23 +456,19 @@ const TYPES = [
     icon: '⚙️',
     naam: 'Horizontale wielmolen',
     jaar: '~300 v.Chr.',
-    badge: 'Impulse', badgeKlasse: 'imp',
-    principe: 'Impulse — waterstraal van onderaf',
+    badge: 'Impuls', badgeKlasse: 'imp',
+    principe: 'Impuls,  waterstraal van onderaf',
     afbeelding: 'images/horizontale-wielmolen.jpg',
     afbeeldingBron: '',
     werking: [
-      'Een horizontaal waterrad met houten schoepen werd rechtstreeks aangedreven door een waterstraal van onderaf.',
-      'Geen tandwielen nodig — de as van het rad dreef de molensteen direct aan.',
-      'Eenvoudig maar laag rendement.',
-      'Geschikt voor snelle bergbeken met beperkt debiet.',
-      'Toerental van de steen = toerental van het rad, waardoor de steen vaak te traag draaide voor efficiënt malen.',
+      'Heel eenvoudig, horizontaal waterrad met houten schoepen werd rechtstreeks aangedreven door een waterstraal van onderaf.',
     ],
     valhoogte: '1 – 3 m',
     debiet: 'Laag',
     rendement: '15 – 30 %',
     regeling: 'Geen',
     druk: 'Atmosferisch',
-    as: 'Verticale as → molensteen direct',
+    as: 'Horizontale as → molensteen direct',
     bars: [
       { label: 'Rendement',      val: 22 },
       { label: 'Regelbaarheid',  val:  5 },
@@ -489,23 +485,20 @@ const TYPES = [
       'Molensteen draait te traag',
       'Niet schaalbaar naar groter vermogen',
     ],
-    toepassingen: 'Graanmalen in bergbeken (Perzië, Griekenland, vroeg-Romeins). Vandaag nog in gebruik in bergdorpen van Afghanistan en Nepal. Pedagogisch interessant als eenvoudigste hydraulische motor ooit.',
+    toepassingen: 'Geschikt voor snelle bergbeken met beperkt debiet: bv. graanmalen in het vroeg-Romeinse rijk. Vandaag nog in gebruik in bergdorpen van Afghanistan en Nepal.',
   },
   {
     id: 1,
     icon: '🌊',
     naam: 'Onderslagmolen',
     jaar: '~100 n.Chr.',
-    badge: 'Impulse', badgeKlasse: 'imp',
-    principe: 'Impulse — stroomsnelheid van water',
+    badge: 'Impuls', badgeKlasse: 'imp',
+    principe: 'Impuls, stroomsnelheid van water',
     afbeelding: 'images/onderslagmolen.jpg',
     afbeeldingBron: '',
     werking: [
-      'Het water stroomt onderdoor het wiel en duwt de schoepen weg via de stroomsnelheid (kinetische energie).',
-      'Verticale as — een tandwieloverbrenging is nodig om de horizontale molensteen aan te drijven.',
-      'Het oudste type verticaal waterrad.',
-      'Ideaal voor rivieren met weinig hoogteverschil maar een hoog debiet, zoals in de Kempen en het Maasland.',
-      'Al bij een klein verval van 0,5 – 1 m kan dit type functioneren.',
+      'Het water stroomt onder het wiel door en duwt de schoepen weg via de stroomsnelheid van het water (zuiver kinetisch).',
+      'Het oudste verticale waterradtype.',
     ],
     valhoogte: '< 1 m',
     debiet: 'Middel – hoog',
@@ -525,11 +518,11 @@ const TYPES = [
       'Eenvoudige constructie',
     ],
     nadelen: [
-      'Laagste rendement van verticale raderen',
+      'Laagste rendement van verticale radtypes',
       'Droogteperiodes = stilstand',
       'Kwetsbaar bij hoogwater',
     ],
-    toepassingen: 'Vlakke rivieren in de Kempen en het Maasland. Kleine Nete (Retie, Kasterlee), Dommel (Eindhoven), Aa (Tielen), Dinkel. Vandaag vrijwel uitsluitend als erfgoedmolen.',
+    toepassingen: 'Ideaal voor rivieren met weinig hoogteverschil, maar hoog debiet (Kempen, Maasland). Vandaag vrijwel uitsluitend als erfgoedmolen.',
   },
   {
     id: 2,
@@ -537,13 +530,12 @@ const TYPES = [
     naam: 'Bovenslagmolen',
     jaar: 'Middeleeuwen',
     badge: 'Potentieel + kinetisch', badgeKlasse: 'pot',
-    principe: 'Potentiële energie (gewicht) + kinetisch',
+    principe: 'Potentiële + kinetische energie',
     afbeelding: 'images/bovenslagmolen.jpg',
     afbeeldingBron: '',
     werking: [
       'Het water wordt via een goot bovenaan het wiel in emmers of scheppen geleid.',
-      'Twee energiebronnen tegelijk: het gewicht van het water (potentiële energie) én de resterende stroomsnelheid.',
-      'Aanzienlijk efficiënter dan de onderslag- en middenslagmolen.',
+      'Twee energiebronnen tegelijk: het gewicht van het water (potentiële energie) én de resterende stroomsnelheid (kinetische energie).',
       'Een molenvijver kon water bufferen voor periodes zonder regen.',
       'Het meest verspreide molentype in heuvelachtig Europa.',
     ],
@@ -560,22 +552,21 @@ const TYPES = [
       { label: 'Valhoogtegebied',val: 30 },
     ],
     voor: [
-      'Hoogste rendement historisch (tot 70 %)',
+      'Historisch hoog rendement (tot 70 %)',
       'Molenvijver als energiebuffer',
       'Benut zowel gewicht als stroomsnelheid',
     ],
     nadelen: [
       'Minimum 3 m verval nodig',
-      'Goot, stuw en molenvijver als infrastructuur',
-      'Groot wiel = grote ruimtelijke voetafdruk',
+      'Grote infrastructuur',
     ],
-    toepassingen: 'Heuvelige beken in Ardennen en heuvelland Limburg. Molen Herckenrode op de Demer, Ten Bergemolen (Gent, vermeld 1040). Vandaag als museum of kleinschalige elektriciteitsopwekking.',
+    toepassingen: 'Heuvelachtige beken (Ardennen en heuvelland Limburg). Vandaag als museum of kleinschalige elektriciteitsopwekking.',
   },
   {
     id: 3,
     icon: '🌀',
     naam: 'Francis-turbine',
-    jaar: '1849 — James B. Francis',
+    jaar: '1849 - James B. Francis',
     badge: 'Reactie', badgeKlasse: 'react',
     principe: 'Reactie: radiaal instroom → axiaal uitstroom',
     afbeelding: 'images/francis-turbine.jpg',
@@ -583,12 +574,11 @@ const TYPES = [
     werking: [
       'Water stroomt radiaal naar binnen via verstelbare gidsvanen en verlaat de turbine axiaal.',
       'Combineert twee mechanismen: de gidsvanen zetten drukenergie om in snelheid (impuls), de schoepen halen daarna ook de resterende druk eruit (reactie).',
-      'Continu regelbaar via de gidsvanen, ook bij deellast.',
       'Vandaag wereldwijd de meest gebruikte turbine, van kleine centrales tot meerdere gigawatt.',
     ],
-    valhoogte: '20 – 600 m',
-    debiet: 'Middel – hoog',
-    rendement: '90 – 93 %',
+    valhoogte: '20 - 600 m',
+    debiet: 'Middel - hoog',
+    rendement: '90 - 93 %',
     regeling: 'Gidsvanen (continu regelbaar)',
     druk: 'Ingesloten (overdruk)',
     as: 'Verticale of horizontale as',
@@ -600,7 +590,7 @@ const TYPES = [
     ],
     voor: [
       'Hoogste rendement van alle turbinetypen (tot 93 %)',
-      'Breed inzetbaar voor zowel H als Q',
+      'Breed inzetbaar',
       'Compact voor zijn vermogen',
       'Continu regelbaar via gidsvanen',
     ],
@@ -609,23 +599,20 @@ const TYPES = [
       'Minder efficiënt bij sterk wisselend debiet',
       'Complexe en dure fabricage',
     ],
-    toepassingen: 'Meest gebruikte turbine ter wereld. Drieklovendam China (22,5 GW), Grand Coulee VS, Itaipú Brazilië/Paraguay. Universeel van 20 MW tot meerdere GW.',
+    toepassingen: 'Breed inzetbaar voor variabele hoogtes en debiet. Meest gebruikte turbine ter wereld. Drieklovendam China (22,5 GW), Grand Coulee VS, Itaipú Brazilië/Paraguay. Universeel van 20 MW tot meerdere GW.',
   },
   {
     id: 4,
     icon: '💧',
     naam: 'Pelton-turbine',
-    jaar: '1878 — Lester Pelton',
-    badge: 'Impulse', badgeKlasse: 'imp',
-    principe: 'Puur impulse: vrije waterstraal op dubbele cups',
+    jaar: '1878 - Lester Pelton',
+    badge: 'Impuls', badgeKlasse: 'imp',
+    principe: 'Puur impuls: vrije waterstraal op dubbele cups',
     afbeelding: 'images/pelton-turbine.jpg',
     afbeeldingBron: '',
     werking: [
       'Eén of meerdere waterstralen treffen dubbele lepelvormige schoepen (cups) aan de buitenrand van het wiel.',
-      'Pure impulsturbine: in het huis heerst enkel atmosferische druk, geen overdruk.',
-      'Bij optimale werking verlaat het water de cups nagenoeg stilstaand — vrijwel alle energie is overgedragen.',
-      'Geschikt voor zeer hoge valhoogtes met een beperkt debiet.',
-      'Regeling via de nozel(s) en een afbuigklep, waardoor snelle lastwisselingen mogelijk zijn.',
+      'Bij optimale werking verlaat het water de cups nagenoeg stilstaand: vrijwel alle energie is overgedragen.',
     ],
     valhoogte: '300 – 1800 m',
     debiet: 'Laag',
@@ -650,22 +637,21 @@ const TYPES = [
       'Drukleidingen (penstock) soms kilometersver',
       'Niet bruikbaar bij lage valhoogte',
     ],
-    toepassingen: 'Noorwegen (Sy-Sima, 1220 m), Zwitserland (Grande Dixence, 1748 m), Coo-Trois-Ponts België (270 m). Micro-Pelton voor berghutten en off-grid toepassingen.',
+    toepassingen: 'Geschikt voor zeer hoge valhoogtes, met beperkt debiet: Noorwegen (Sy-Sima, 1220 m), Zwitserland (Grande Dixence, 1748 m), Coo-Trois-Ponts België (270 m). Micro-Pelton voor berghutten en off-grid toepassingen.',
   },
   {
     id: 5,
     icon: '🔄',
     naam: 'Kaplan-turbine',
-    jaar: '1913 — Viktor Kaplan',
+    jaar: '1913 - Viktor Kaplan',
     badge: 'Reactie', badgeKlasse: 'react',
     principe: 'Reactie: axiaal doorstroomd, verstelbare bladen',
     afbeelding: 'images/kaplan-turbine.jpg',
     afbeeldingBron: '',
     werking: [
-      'Axiaal doorstroomd propellertype — het water stroomt evenwijdig aan de as, zoals een omgekeerde scheepsschroef.',
+      'Axiaal doorstroomd propellertype: het water stroomt evenwijdig aan de as, zoals een omgekeerde scheepsschroef.',
       'Cruciale innovatie: verstelbare rotorbladen, in tegenstelling tot een vaste propellerturbine.',
       'Het rendement blijft hoog over een breed debietsgebied dankzij de dubbele verstelling (gidsvanen én rotorbladen).',
-      'Ideaal voor een laag verval gecombineerd met een hoog debiet.',
     ],
     valhoogte: '2 – 40 m',
     debiet: 'Zeer hoog',
@@ -690,7 +676,7 @@ const TYPES = [
       'Hoge constructie- en onderhoudskosten',
       'Groot grond- en betonwerk nodig',
     ],
-    toepassingen: 'Riviermond Eems, Maasbracht, Gentbrugge. Getijdecentrale Rance (Frankrijk, 240 MW). Coo-Trois-Ponts (pomp-opslagcentrale). Stroom-Kaplan in bevaarbare waterwegen.',
+    toepassingen: 'Ideaal voor een laag verval met een hoog debiet: Getijdecentrale Rance (Frankrijk, 240 MW). Coo-Trois-Ponts (pomp-opslagcentrale).',
   },
 ];
 
